@@ -84,7 +84,7 @@ const i18n = {
     contactLabel: 'Контакти',
     contactHeading: 'Зробіть перший <em>крок</em>',
     contactSub: 'Запишіться на безкоштовну 20-хвилинну первинну консультацію. Разом визначимо, чи підходить мій підхід вашій ситуації.',
-    contactPhoneLabel: 'Телефон / Viber / WhatsApp',
+    contactPhoneLabel: 'Телефон / Telegram / Viber / WhatsApp',
     contactCityLabel: 'Місто',
     contactCityVal: 'Харків, Україна',
     contactHoursLabel: 'Прийом',
@@ -97,7 +97,7 @@ const i18n = {
 
     footerName: 'Юлія Макарицька — Сенсорна інтеграція',
     footerCity: 'Харків, Україна',
-    footerCopyright: '© 2025 · Харків, Україна',
+    footerCopyright: '© 2026 · Харків, Україна',
   },
 
   ru: {
@@ -181,7 +181,7 @@ const i18n = {
     contactLabel: 'Контакты',
     contactHeading: 'Сделайте первый <em>шаг</em>',
     contactSub: 'Запишитесь на бесплатную 20-минутную первичную консультацию. Вместе определим, подходит ли мой подход вашей ситуации.',
-    contactPhoneLabel: 'Телефон / Viber / WhatsApp',
+    contactPhoneLabel: 'Телефон / Telegram / Viber / WhatsApp',
     contactCityLabel: 'Город',
     contactCityVal: 'Харьков, Украина',
     contactHoursLabel: 'Приём',
@@ -193,7 +193,7 @@ const i18n = {
     formSubmit: 'Отправить заявку →',
 
     footerName: 'Юлия Макарицкая — Сенсорная интеграция',
-    footerCopyright: '© 2025 · Харьков, Украина',
+    footerCopyright: '© 2026 · Харьков, Украина',
   },
 
   en: {
@@ -277,7 +277,7 @@ const i18n = {
     contactLabel: 'Contact',
     contactHeading: 'Take the first <em>step</em>',
     contactSub: 'Book a free 20-minute initial consultation. Together we\'ll determine whether my approach fits your situation.',
-    contactPhoneLabel: 'Phone / Viber / WhatsApp',
+    contactPhoneLabel: 'Phone / Telegram / Viber / WhatsApp',
     contactCityLabel: 'City',
     contactCityVal: 'Kharkiv, Ukraine',
     contactHoursLabel: 'Hours',
@@ -289,7 +289,7 @@ const i18n = {
     formSubmit: 'Send request →',
 
     footerName: 'Yuliia Makarytska — Sensory Integration',
-    footerCopyright: '© 2025 · Kharkiv, Ukraine',
+    footerCopyright: '© 2026 · Kharkiv, Ukraine',
   }
 };
 
