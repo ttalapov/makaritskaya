@@ -13,3 +13,8 @@ Thumbs.db
 # scratch
 *.log
 _*.html
+
+# camera originals: needed to regenerate the derivatives, never deployed,
+# never committed. build.mjs copies assets/ wholesale, so sources live
+# outside it by construction rather than by a filter someone can forget.
+sources/
