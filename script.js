@@ -29,8 +29,6 @@ const i18n = {
     quote: 'Кожна нервова система унікальна. Моє завдання — знайти індивідуальний ключ, що відкриває потенціал розвитку.',
     credEduTitle: 'Вища освіта',
     credEduDesc: 'Спеціальна педагогіка та психологія розвитку',
-    credEduContTitle: 'Постійна освіта',
-    credEduContDesc: 'Стажування у США, Польщі, Ізраїлі',
 
     methodsLabel: 'Методи роботи',
     methodsHeading: 'Що саме входить у <em>заняття</em>',
@@ -110,8 +108,6 @@ const i18n = {
     quote: 'Каждая нервная система уникальна. Моя задача — найти индивидуальный ключ, открывающий потенциал развития.',
     credEduTitle: 'Высшее образование',
     credEduDesc: 'Специальная педагогика и психология развития',
-    credEduContTitle: 'Непрерывное образование',
-    credEduContDesc: 'Стажировки в США, Польше, Израиле',
 
     methodsLabel: 'Методы работы',
     methodsHeading: 'Что именно входит в <em>занятие</em>',
@@ -190,8 +186,6 @@ const i18n = {
     quote: 'Every nervous system is unique. My task is to find the individual key that unlocks the potential for development.',
     credEduTitle: 'Higher Education',
     credEduDesc: 'Special Education and Developmental Psychology',
-    credEduContTitle: 'Continuous Learning',
-    credEduContDesc: 'Internships in the USA, Poland, Israel',
 
     methodsLabel: 'Methods',
     methodsHeading: 'What a <em>session</em> involves',
@@ -281,7 +275,6 @@ function applyLang(lang) {
   document.querySelector('.about-quote').textContent = t.quote;
   const creds = document.querySelectorAll('.cred-text');
   creds[0].innerHTML = `<strong>${t.credEduTitle}</strong>${t.credEduDesc}`;
-  creds[1].innerHTML = `<strong>${t.credEduContTitle}</strong>${t.credEduContDesc}`;
 
   // Methods header
   document.querySelector('.methods .section-label').textContent = t.methodsLabel;
