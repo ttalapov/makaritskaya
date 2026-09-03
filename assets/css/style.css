@@ -21,6 +21,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
   align-items: center;
 }
 .lang-btn {
+  display: inline-block;
+  text-decoration: none;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.06em;
@@ -160,6 +162,8 @@ section { padding: 7rem 4rem; }
 
 /* ─── WHO ─── */
 .who { background: var(--white); }
+.who-header { text-align: center; max-width: 600px; margin: 0 auto 0.5rem; }
+.who-header .section-sub { margin: 0 auto; }
 .who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; margin-top: 3rem; }
 .who-card { border-radius: 1.25rem; padding: 2rem 1.5rem; text-align: center; border: 1px solid var(--border); transition: all 0.3s; background: var(--cream); }
 .who-card:hover { background: var(--sage-pale); border-color: var(--sage-light); transform: translateY(-3px); }
@@ -177,6 +181,7 @@ section { padding: 7rem 4rem; }
 .contact-label { font-size: 0.72rem; color: var(--ink-muted); }
 .contact-val { font-size: 1rem; font-weight: 500; color: var(--ink); }
 .form-heading { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--ink); margin-bottom: 1.5rem; line-height: 1.3; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 .form-group { margin-bottom: 1rem; }
 .form-group input, .form-group textarea { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 0.75rem; background: var(--white); font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--ink); outline: none; transition: border-color 0.2s; }
 .form-group input:focus, .form-group textarea:focus { border-color: var(--sage); }
@@ -186,6 +191,8 @@ section { padding: 7rem 4rem; }
 
 /* ─── FOOTER ─── */
 footer { background: var(--ink); color: rgba(255,255,255,0.45); padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; }
+footer a { color: inherit; text-decoration: none; }
+footer a:hover { color: var(--white); }
 footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; color: rgba(255,255,255,0.8); }
 
 /* ─── ANIMATIONS ─── */

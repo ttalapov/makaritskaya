@@ -1,0 +1,29 @@
+<section class="about" id="about">
+  <div>
+    <p class="section-label reveal">{{about.label}}</p>
+    <h2 class="section-heading reveal reveal-delay-1">{{{about.heading}}}</h2>
+    <p class="section-sub reveal reveal-delay-2">{{about.sub}}</p>
+    <div class="about-stats reveal reveal-delay-3">
+{{statsHtml}}
+    </div>
+  </div>
+  <div class="about-quote-area reveal reveal-delay-2">
+    <figure class="about-photo">
+      <picture>
+        <source type="image/avif" srcset="/assets/img/about-yuliia-son-480.avif 480w, /assets/img/about-yuliia-son-720.avif 720w" sizes="(max-width: 480px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 40px), (max-width: 1024px) calc(50vw - 68px), calc(50vw - 112px)">
+        <source type="image/webp" srcset="/assets/img/about-yuliia-son-480.webp 480w, /assets/img/about-yuliia-son-720.webp 720w" sizes="(max-width: 480px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 40px), (max-width: 1024px) calc(50vw - 68px), calc(50vw - 112px)">
+        <img src="/assets/img/about-yuliia-son-720.jpg"
+             srcset="/assets/img/about-yuliia-son-480.jpg 480w, /assets/img/about-yuliia-son-720.jpg 720w" sizes="(max-width: 480px) calc(100vw - 32px), (max-width: 768px) calc(100vw - 40px), (max-width: 1024px) calc(50vw - 68px), calc(50vw - 112px)"
+             width="720" height="900" loading="lazy" decoding="async"
+             alt="{{about.photoAlt}}">
+      </picture>
+    </figure>
+    <div class="quote-wrap">
+      <div class="quote-mark" aria-hidden="true">&quot;</div>
+      <p class="about-quote">{{about.quote}}</p>
+    </div>
+    <div class="about-creds">
+{{credsHtml}}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+<nav>
+  <a href="#main" class="nav-logo">{{nav.logo}}</a>
+  <ul class="nav-links">
+    <li><a href="#about">{{nav.about}}</a></li>
+    <li><a href="#methods">{{nav.methods}}</a></li>
+    <li><a href="#approach">{{nav.approach}}</a></li>
+    <li><a href="#who">{{nav.who}}</a></li>
+  </ul>
+  <div class="nav-right">
+    {{langSwitcher}}
+    <a href="#contact" class="nav-cta">{{nav.cta}}</a>
+  </div>
+  <button class="burger" aria-label="{{nav.menuLabel}}" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    {{langSwitcherMobile}}
+    <nav class="mobile-nav-links" aria-label="{{nav.menuLabel}}">
+      <a href="#about">{{nav.about}}</a>
+      <a href="#methods">{{nav.methods}}</a>
+      <a href="#approach">{{nav.approach}}</a>
+      <a href="#who">{{nav.who}}</a>
+      <a href="#contact" class="mobile-cta">{{nav.cta}}</a>
+    </nav>
+  </div>
+</div>

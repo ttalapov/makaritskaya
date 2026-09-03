@@ -1,0 +1,27 @@
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">{{hero.eyebrow}}</div>
+    <h1 class="hero-name">{{hero.nameFirst}}<br><em>{{hero.nameLast}}</em></h1>
+    <p class="hero-title">{{hero.title}}</p>
+    <p class="hero-desc">{{hero.desc}}</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">{{hero.btnPrimary}} {{arrowLg}}</a>
+      <a href="#methods" class="btn-secondary">{{hero.btnSecondary}} {{arrowSm}}</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="portrait-frame">
+      <div class="portrait-bg" aria-hidden="true"></div>
+      <picture class="portrait-img">
+        <source type="image/avif" srcset="/assets/img/hero-yuliia-240.avif 240w, /assets/img/hero-yuliia-334.avif 334w" sizes="(max-width: 480px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 300px, 334px">
+        <source type="image/webp" srcset="/assets/img/hero-yuliia-240.webp 240w, /assets/img/hero-yuliia-334.webp 334w" sizes="(max-width: 480px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 300px, 334px">
+        <img src="/assets/img/hero-yuliia-334.png"
+             srcset="/assets/img/hero-yuliia-240.png 240w, /assets/img/hero-yuliia-334.png 334w" sizes="(max-width: 480px) 240px, (max-width: 768px) 280px, (max-width: 1024px) 300px, 334px"
+             width="334" height="378" fetchpriority="high" decoding="async"
+             alt="{{hero.imgAlt}}">
+      </picture>
+      <div class="floating-badge badge-exp"><span class="badge-dot dot-sage" aria-hidden="true"></span>{{hero.badgeCity}}</div>
+      <div class="floating-badge badge-cert"><span class="badge-dot dot-clay" aria-hidden="true"></span>{{hero.badgeSecond}}</div>
+    </div>
+  </div>
+</section>
