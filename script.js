@@ -23,34 +23,18 @@ const i18n = {
     aboutHeading: 'Фахівець, якому <em>довіряють</em>',
     aboutSub: 'Більше 10 років практики у сфері сенсорної інтеграції та нейророзвитку. Постійне навчання та впровадження найсучасніших світових методик.',
     statYears: 'років практики',
-    statCases: 'успішних випадків',
-    statMethods: 'методик та підходів',
+    statCases: 'родин у роботі',
+    statMethods: 'напрями роботи',
     statSupport: 'підтримки родин',
     quote: 'Кожна нервова система унікальна. Моє завдання — знайти індивідуальний ключ, що відкриває потенціал розвитку.',
     credEduTitle: 'Вища освіта',
     credEduDesc: 'Спеціальна педагогіка та психологія розвитку',
-    credCertTitle: 'Міжнародна сертифікація',
-    credCertDesc: 'Сенсорна інтеграція за Айрес (ASI®) та інші',
     credEduContTitle: 'Постійна освіта',
     credEduContDesc: 'Стажування у США, Польщі, Ізраїлі',
 
-    methodsLabel: 'Технології та методики',
-    methodsHeading: 'Сучасний арсенал <em>інструментів</em>',
-    methodsSub: 'Використовую лише доказові та науково обґрунтовані методи з підтвердженою ефективністю в міжнародній практиці.',
-    methods: [
-      { title: 'Сенсорна інтеграція за Айрес (ASI®)', desc: 'Класичний підхід Джин Айрес, адаптований до сучасних нейронаук. Гра як терапія — природне середовище для розвитку нервової системи.', tag: 'Золотий стандарт' },
-      { title: 'Метод Томатіс® (Sound Therapy)', desc: 'Нейроакустична стимуляція для розвитку слухового сприйняття, уваги, мовлення та емоційної регуляції через спеціально оброблені звуки.', tag: 'Нейроакустика' },
-      { title: 'iLs — Integrated Listening Systems', desc: 'Поєднання слухової стимуляції з рухом для активації мозочково-вестибулярних зв\'язків і покращення навчальних здібностей.', tag: 'Мультисенсорний' },
-      { title: 'Safe and Sound Protocol (SSP)', desc: 'Протокол Стівена Поргеса на основі Полівагальної теорії. Відновлення відчуття безпеки нервової системи через спеціально фільтровану музику.', tag: 'Полівагальна теорія' },
-      { title: 'Neurofeedback (нейробіофідбек)', desc: 'Тренування мозкових хвиль за допомогою ЕЕГ-технологій. Покращує концентрацію, зменшує тривожність і регулює гіперактивність.', tag: 'Нейротехнології' },
-      { title: 'DIR/Floortime®', desc: 'Розвиток емоційних та когнітивних можливостей через взаємодію на рівні дитини. Базується на теорії функціонально-емоційного розвитку.', tag: 'Відносини & розвиток' },
-      { title: 'Рефлекторна моторна інтеграція (RMTi)', desc: 'Робота з первинними рефлексами для покращення координації, уваги та академічної готовності через цілеспрямовані рухові вправи.', tag: 'Моторна інтеграція' },
-      { title: 'Вестибулярно-пропріоцептивна терапія', desc: 'Цільова стимуляція вестибулярної системи та рецепторів глибокого чуття через спеціалізоване обладнання — платформи, гойдалки, ромашки.', tag: 'Апаратна терапія' },
-      { title: 'Протокол Вілбаргер (Wilbarger Protocol)', desc: 'Нейронне зчеплення для зменшення тактильної захисності та покращення сенсорного сприйняття через глибокий тиск і пропріоцептивне навантаження.', tag: 'Тактильна система' },
-      { title: 'Сенсорна дієта (Sensory Diet)', desc: 'Індивідуально підібрані сенсорні активності протягом дня для підтримки оптимального рівня збудження нервової системи вдома та в школі.', tag: 'Щоденна практика' },
-      { title: 'HANDLE® Approach', desc: 'Холістичний підхід до нейророзвитку: м\'яка, нестресова активація нервової системи для підвищення ефективності навчання та адаптації.', tag: 'Холістичний підхід' },
-      { title: 'Somatic Experiencing® (SE)', desc: 'Опрацювання сенсорних та емоційних блоків через тіло. Ефективно для дітей і дорослих з травматичним досвідом та розладами регуляції.', tag: 'Соматичний підхід' },
-    ],
+    methodsLabel: 'Методи роботи',
+    methodsHeading: 'Що саме входить у <em>заняття</em>',
+    methodsSub: 'Робота будується за шістьма напрямами. Програма для кожної дитини складається індивідуально, повний перелік методів — нижче.',
 
     approachLabel: 'Мій підхід',
     approachHeading: 'Як проходить <em>робота</em>',
@@ -120,34 +104,18 @@ const i18n = {
     aboutHeading: 'Специалист, которому <em>доверяют</em>',
     aboutSub: 'Более 10 лет практики в области сенсорной интеграции и нейроразвития. Постоянное обучение и внедрение современнейших мировых методик.',
     statYears: 'лет практики',
-    statCases: 'успешных случаев',
-    statMethods: 'методик и подходов',
+    statCases: 'семей в работе',
+    statMethods: 'направления работы',
     statSupport: 'поддержки семей',
     quote: 'Каждая нервная система уникальна. Моя задача — найти индивидуальный ключ, открывающий потенциал развития.',
     credEduTitle: 'Высшее образование',
     credEduDesc: 'Специальная педагогика и психология развития',
-    credCertTitle: 'Международная сертификация',
-    credCertDesc: 'Сенсорная интеграция по Айрес (ASI®) и другие',
     credEduContTitle: 'Непрерывное образование',
     credEduContDesc: 'Стажировки в США, Польше, Израиле',
 
-    methodsLabel: 'Технологии и методики',
-    methodsHeading: 'Современный арсенал <em>инструментов</em>',
-    methodsSub: 'Использую только доказательные и научно обоснованные методы с подтверждённой эффективностью в международной практике.',
-    methods: [
-      { title: 'Сенсорная интеграция по Айрес (ASI®)', desc: 'Классический подход Джин Айрес, адаптированный к современным нейронаукам. Игра как терапия — естественная среда для развития нервной системы.', tag: 'Золотой стандарт' },
-      { title: 'Метод Томатис® (Sound Therapy)', desc: 'Нейроакустическая стимуляция для развития слухового восприятия, внимания, речи и эмоциональной регуляции через специально обработанные звуки.', tag: 'Нейроакустика' },
-      { title: 'iLs — Integrated Listening Systems', desc: 'Сочетание слуховой стимуляции с движением для активации мозжечково-вестибулярных связей и улучшения учебных способностей.', tag: 'Мультисенсорный' },
-      { title: 'Safe and Sound Protocol (SSP)', desc: 'Протокол Стивена Поргеса на основе Поливагальной теории. Восстановление ощущения безопасности нервной системы через специально фильтрованную музыку.', tag: 'Поливагальная теория' },
-      { title: 'Neurofeedback (нейробиофидбек)', desc: 'Тренировка мозговых волн с помощью ЭЭГ-технологий. Улучшает концентрацию, снижает тревожность и регулирует гиперактивность.', tag: 'Нейротехнологии' },
-      { title: 'DIR/Floortime®', desc: 'Развитие эмоциональных и когнитивных возможностей через взаимодействие на уровне ребёнка. Основан на теории функционально-эмоционального развития.', tag: 'Отношения & развитие' },
-      { title: 'Рефлекторная моторная интеграция (RMTi)', desc: 'Работа с первичными рефлексами для улучшения координации, внимания и академической готовности через целенаправленные двигательные упражнения.', tag: 'Моторная интеграция' },
-      { title: 'Вестибулярно-проприоцептивная терапия', desc: 'Целевая стимуляция вестибулярной системы и рецепторов глубокого чувства через специализированное оборудование — платформы, качели.', tag: 'Аппаратная терапия' },
-      { title: 'Протокол Вилбаргер (Wilbarger Protocol)', desc: 'Нейронное сцепление для снижения тактильной защитности и улучшения сенсорного восприятия через глубокое давление и проприоцептивную нагрузку.', tag: 'Тактильная система' },
-      { title: 'Сенсорная диета (Sensory Diet)', desc: 'Индивидуально подобранные сенсорные активности в течение дня для поддержания оптимального уровня возбуждения нервной системы дома и в школе.', tag: 'Ежедневная практика' },
-      { title: 'HANDLE® Approach', desc: 'Целостный подход к нейроразвитию: мягкая, нестрессовая активация нервной системы для повышения эффективности обучения и адаптации.', tag: 'Целостный подход' },
-      { title: 'Somatic Experiencing® (SE)', desc: 'Проработка сенсорных и эмоциональных блоков через тело. Эффективно для детей и взрослых с травматическим опытом и расстройствами регуляции.', tag: 'Соматический подход' },
-    ],
+    methodsLabel: 'Методы работы',
+    methodsHeading: 'Что именно входит в <em>занятие</em>',
+    methodsSub: 'Работа строится по шести направлениям. Программа для каждого ребёнка составляется индивидуально, полный перечень методов — ниже.',
 
     approachLabel: 'Мой подход',
     approachHeading: 'Как проходит <em>работа</em>',
@@ -216,34 +184,18 @@ const i18n = {
     aboutHeading: 'A specialist you can <em>trust</em>',
     aboutSub: 'Over 10 years of practice in sensory integration and neurodevelopment. Continuous education and implementation of cutting-edge global methodologies.',
     statYears: 'years of practice',
-    statCases: 'successful cases',
-    statMethods: 'techniques & approaches',
+    statCases: 'families supported',
+    statMethods: 'areas of work',
     statSupport: 'families supported',
     quote: 'Every nervous system is unique. My task is to find the individual key that unlocks the potential for development.',
     credEduTitle: 'Higher Education',
     credEduDesc: 'Special Education and Developmental Psychology',
-    credCertTitle: 'International Certification',
-    credCertDesc: 'Ayres Sensory Integration (ASI®) and others',
     credEduContTitle: 'Continuous Learning',
     credEduContDesc: 'Internships in the USA, Poland, Israel',
 
-    methodsLabel: 'Technologies & Methods',
-    methodsHeading: 'A modern arsenal of <em>tools</em>',
-    methodsSub: 'I use only evidence-based, scientifically validated methods with proven effectiveness in international practice.',
-    methods: [
-      { title: 'Ayres Sensory Integration (ASI®)', desc: 'The classic Jean Ayres approach adapted to modern neuroscience. Play as therapy — a natural environment for nervous system development.', tag: 'Gold standard' },
-      { title: 'Tomatis® Method (Sound Therapy)', desc: 'Neuroacoustic stimulation for developing auditory perception, attention, speech, and emotional regulation through specially processed sounds.', tag: 'Neuroacoustics' },
-      { title: 'iLs — Integrated Listening Systems', desc: 'Combining auditory stimulation with movement to activate cerebellar-vestibular connections and improve learning abilities.', tag: 'Multisensory' },
-      { title: 'Safe and Sound Protocol (SSP)', desc: 'Stephen Porges\' protocol based on Polyvagal Theory. Restoring the nervous system\'s sense of safety through specially filtered music.', tag: 'Polyvagal Theory' },
-      { title: 'Neurofeedback', desc: 'Training brainwave patterns using EEG technology. Improves concentration, reduces anxiety, and regulates hyperactivity.', tag: 'Neurotechnology' },
-      { title: 'DIR/Floortime®', desc: 'Developing emotional and cognitive capacities through child-led interaction. Based on the Developmental, Individual-Difference, Relationship-based model.', tag: 'Relationships & development' },
-      { title: 'Reflex Motor Integration (RMTi)', desc: 'Working with primitive reflexes to improve coordination, attention, and academic readiness through targeted movement exercises.', tag: 'Motor integration' },
-      { title: 'Vestibular-Proprioceptive Therapy', desc: 'Targeted stimulation of the vestibular system and deep-sense receptors through specialised equipment — platforms, swings, and discs.', tag: 'Equipment therapy' },
-      { title: 'Wilbarger Protocol', desc: 'Neural coupling to reduce tactile defensiveness and improve sensory processing through deep pressure and proprioceptive input.', tag: 'Tactile system' },
-      { title: 'Sensory Diet', desc: 'Individually tailored sensory activities throughout the day to maintain the optimal arousal level of the nervous system at home and school.', tag: 'Daily practice' },
-      { title: 'HANDLE® Approach', desc: 'A holistic approach to neurodevelopment: gentle, non-stress activation of the nervous system to enhance learning efficiency and adaptation.', tag: 'Holistic approach' },
-      { title: 'Somatic Experiencing® (SE)', desc: 'Processing sensory and emotional blocks through the body. Effective for children and adults with trauma history and dysregulation.', tag: 'Somatic approach' },
-    ],
+    methodsLabel: 'Methods',
+    methodsHeading: 'What a <em>session</em> involves',
+    methodsSub: 'The work is built around six areas. Each child gets an individually built programme; the full list of methods is below.',
 
     approachLabel: 'My approach',
     approachHeading: 'How the <em>work</em> unfolds',
@@ -329,23 +281,14 @@ function applyLang(lang) {
   document.querySelector('.about-quote').textContent = t.quote;
   const creds = document.querySelectorAll('.cred-text');
   creds[0].innerHTML = `<strong>${t.credEduTitle}</strong>${t.credEduDesc}`;
-  creds[1].innerHTML = `<strong>${t.credCertTitle}</strong>${t.credCertDesc}`;
-  creds[2].innerHTML = `<strong>${t.credEduContTitle}</strong>${t.credEduContDesc}`;
+  creds[1].innerHTML = `<strong>${t.credEduContTitle}</strong>${t.credEduContDesc}`;
 
   // Methods header
   document.querySelector('.methods .section-label').textContent = t.methodsLabel;
   document.querySelector('.methods .section-heading').innerHTML = t.methodsHeading;
   document.querySelector('.methods .section-sub').textContent = t.methodsSub;
 
-  // Method cards
-  const cards = document.querySelectorAll('.method-card');
-  t.methods.forEach((m, i) => {
-    if (cards[i]) {
-      cards[i].querySelector('.method-title').textContent = m.title;
-      cards[i].querySelector('.method-desc').textContent = m.desc;
-      cards[i].querySelector('.method-tag').textContent = m.tag;
-    }
-  });
+  // Method cards are static markup; Step 3 moves them into content/<lang>.json
 
   // Approach
   document.querySelector('#approach .section-label').textContent = t.approachLabel;
