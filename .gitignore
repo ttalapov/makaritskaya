@@ -1,0 +1,15 @@
+# dependencies
+node_modules/
+
+# build output (appears at Step 3)
+dist/
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# scratch
+*.log
+_*.html
