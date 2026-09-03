@@ -71,11 +71,14 @@ nav {
 .btn-secondary { font-size: 0.88rem; color: var(--ink-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
 .btn-secondary:hover { color: var(--sage); }
 .hero-visual { position: relative; z-index: 1; display: flex; justify-content: center; align-items: center; }
-.portrait-frame { position: relative; width: 420px; height: 520px; overflow: visible; }
+.portrait-frame { position: relative; width: 400px; height: 430px; overflow: visible; }
 .portrait-bg { position: absolute; inset: 5% 5% 5% 5%; border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; background: var(--sage-pale); animation: morphBlob 8s ease-in-out infinite; }
 @keyframes morphBlob { 0%, 100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; } 50% { border-radius: 40% 60% 45% 55% / 60% 40% 60% 40%; } }
 .portrait-initials { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 7rem; font-weight: 300; color: var(--sage); }
-.portrait-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: auto; height: 105%; max-width: none; object-fit: contain; object-position: bottom center; filter: saturate(0.9) contrast(1.05) brightness(1.02); }
+.portrait-img { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); display: block; width: 334px; max-width: 100%; }
+.portrait-img img { display: block; width: 100%; height: auto; filter: saturate(0.9) contrast(1.05) brightness(1.02);
+  -webkit-mask-image: linear-gradient(to bottom, #000 86%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 86%, transparent 100%); }
 .floating-badge { position: absolute; background: var(--white); border: 1px solid var(--border); border-radius: 1.5rem; padding: 0.75rem 1.25rem; font-size: 0.8rem; font-weight: 500; color: var(--ink); box-shadow: 0 8px 32px rgba(0,0,0,0.06); white-space: nowrap; }
 .badge-exp { bottom: 60px; left: -30px; animation: floatUp 4s ease-in-out infinite; }
 .badge-cert { top: 60px; right: -20px; animation: floatUp 4s ease-in-out infinite 2s; }
@@ -99,6 +102,9 @@ section { padding: 7rem 4rem; }
 .stat-desc { font-size: 0.82rem; color: var(--ink-muted); margin-top: 0.3rem; }
 .quote-mark { font-family: 'Cormorant Garamond', serif; font-size: 10rem; font-weight: 300; color: var(--sage-pale); position: absolute; top: -3rem; left: -1rem; line-height: 1; user-select: none; }
 .about-quote-area { position: relative; }
+.quote-wrap { position: relative; }
+.about-photo { margin: 0 0 2.2rem; }
+.about-photo img { display: block; width: 100%; height: auto; border-radius: 1.25rem; box-shadow: 0 16px 48px rgba(0,0,0,0.10); }
 .about-quote { font-family: 'Cormorant Garamond', serif; font-size: 1.55rem; font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.6; position: relative; z-index: 1; padding-top: 2rem; }
 .about-creds { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
 .cred-item { display: flex; align-items: flex-start; gap: 1rem; padding: 1rem 1.2rem; background: var(--cream); border-radius: 0.75rem; border: 1px solid var(--border); }
@@ -268,7 +274,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 
   /* Hero */
   .hero { padding: 6rem 2.5rem 3rem; gap: 2.5rem; }
-  .portrait-frame { width: 340px; height: 420px; }
+  .portrait-frame { width: 340px; height: 380px; }
+  .portrait-img { width: 300px; }
 
   /* About */
   .about { gap: 3.5rem; }
@@ -320,7 +327,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   .hero-actions { justify-content: center; }
 
   /* Portrait */
-  .portrait-frame { width: 280px; height: 340px; }
+  .portrait-frame { width: 300px; height: 340px; }
+  .portrait-img { width: 280px; }
   .badge-exp { left: -10px; bottom: 30px; font-size: 0.72rem; padding: 0.5rem 0.9rem; }
   .badge-cert { right: -10px; top: 20px; font-size: 0.72rem; padding: 0.5rem 0.9rem; }
 
@@ -363,7 +371,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   .hero-actions { flex-direction: column; width: 100%; }
 
   /* Portrait */
-  .portrait-frame { width: 240px; height: 300px; }
+  .portrait-frame { width: 260px; height: 300px; }
+  .portrait-img { width: 240px; }
   .floating-badge { display: none; }
 
   /* About */
