@@ -36,6 +36,7 @@ const ICONS = {
   g4: '<path d="M8.5 4 5 6l-2 4 3 1.6V20h12v-8.4L21 10l-2-4-3.5-2a3.5 3.5 0 0 1-7 0Z"/>',
   g5: '<path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M6 10.2V20h12v-9.8"/><path d="M10 20v-5h4v5"/>',
   g6: '<path d="M9 17V5.5l10-2V15"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/>',
+  g7: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v14H6.5A2.5 2.5 0 0 0 4 19.5Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19v4H6.5A2.5 2.5 0 0 1 4 19.5Z"/><path d="M9 7.5h6"/>',
 };
 const ARROW = (s) =>
   `<svg width="${s}" height="${s}" fill="none" viewBox="0 0 24 24" aria-hidden="true">` +
@@ -134,7 +135,11 @@ const renderCreds = (creds) => creds.map((c) =>
 
 const renderMethodGroups = (groups) => groups.map((g, i) => {
   const delay = i % 3 === 0 ? '' : ` reveal-delay-${i % 3}`;
-  const items = g.items.map((x) => `        <li>${esc(x)}</li>`).join('\n');
+  const items = g.items.map((x) => {
+    const note = x.note ? ` <span class="method-note">${esc(x.note)}</span>` : '';
+    const desc = x.desc ? `<span class="method-item-desc">${esc(x.desc)}</span>` : '';
+    return `        <li><span class="method-item-name">${esc(x.name)}${note}</span>${desc}</li>`;
+  }).join('\n');
   const svg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ` +
     `stroke-linecap="round" stroke-linejoin="round">${ICONS[g.icon]}</svg>`;
   return `    <article class="method-card reveal${delay}">
@@ -146,11 +151,6 @@ ${items}
       </ul>
     </article>`;
 }).join('\n');
-
-const renderMethodsAll = (all) => all.map((m) =>
-  `      <dt>${esc(m.term)}</dt>\n` +
-  (m.desc ? `      <dd>${esc(m.desc)}</dd>` : `      <dd class="dd-empty"></dd>`)
-).join('\n');
 
 const renderSteps = (steps) => steps.map((s, i) =>
   `        <div class="step-item">
@@ -256,7 +256,6 @@ function build() {
       statsHtml: renderStats(c.about.stats),
       credsHtml: renderCreds(c.about.creds),
       methodGroupsHtml: renderMethodGroups(c.methods.groups),
-      methodsAllHtml: renderMethodsAll(c.methods.all),
       stepsHtml: renderSteps(c.approach.steps),
       featuresHtml: renderFeatures(c.approach.features),
       whoCardsHtml: renderWhoCards(c.who.cards),
