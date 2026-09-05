@@ -35,6 +35,8 @@ function initBurger() {
 
   burger.addEventListener('click', () => setOpen(!burger.classList.contains('open')));
   menu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  const close = menu.querySelector('.mobile-close');
+  if (close) close.addEventListener('click', () => { setOpen(false); burger.focus(); });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && burger.classList.contains('open')) {
       setOpen(false);

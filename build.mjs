@@ -53,6 +53,7 @@ const ICONS = {
   instagram:  '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="16.9" cy="7.1" r=".9"/>',
   pin:        '<path d="M12 21s6.8-5.7 6.8-11A6.8 6.8 0 0 0 5.2 10c0 5.3 6.8 11 6.8 11Z"/><circle cx="12" cy="10" r="2.6"/>',
   clock:      '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.9v5.4l3.3 2"/>',
+  close:       '<path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/>',
 };
 const ICON = (key) => {
   if (!(key in ICONS)) throw new Error(`unknown icon: ${key}`);
@@ -141,7 +142,7 @@ function fill(html, values) {
 
 /** Generated markup, not authored copy. */
 const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm',
-  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock']);
+  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock', 'iconClose']);
 
 // ---------------------------------------------------------------------------
 // blocks built from structured content
@@ -289,6 +290,7 @@ function build() {
       hreflangLinks: hreflangLinks(loc),
       langSwitcher: langSwitcher(loc),
       langSwitcherMobile: langSwitcher(loc, ' mobile-lang'),
+      iconClose: ICON('close'),
       iconPhone: ICON('phone'),
       iconInstagram: ICON('instagram'),
       iconPin: ICON('pin'),
