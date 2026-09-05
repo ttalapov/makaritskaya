@@ -4,7 +4,7 @@
 // redirect is a single 301 at the Cloudflare edge, not a rewrite.
 
 import { createServer } from 'node:http';
-import { createReadStream, statSync } from 'node:fs';
+import { createReadStream, readFileSync, statSync } from 'node:fs';
 import { join, extname, normalize } from 'node:path';
 
 const PORT = Number(process.env.PORT) || 8777;
@@ -33,8 +33,15 @@ createServer((req, res) => {
     if (statSync(file).isDirectory()) file = join(file, 'index.html');
     statSync(file);
   } catch {
-    res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
-    return res.end('404 — not found in dist/');
+    // same as GitHub Pages: unmatched paths get 404.html with a 404 status
+    try {
+      const body = readFileSync(join(ROOT, '404.html'));
+      res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
+      return res.end(body);
+    } catch {
+      res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+      return res.end('404');
+    }
   }
 
   res.setHeader('Content-Type', TYPES[extname(file)] || 'application/octet-stream');

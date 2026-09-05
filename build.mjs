@@ -247,6 +247,21 @@ function copyDir(src, dest) {
   return n;
 }
 
+/** One error page for the site, in the default language. */
+function renderNotFound(skeleton, partials) {
+  const loc = DEFAULT_LOCALE;
+  const c = walk(JSON.parse(readFileSync(join(ROOT, 'content', `${loc.segment}.json`), 'utf8')), loc.segment);
+  return fill(skeleton, {
+    ...c,
+    lang: loc.lang,
+    homeUrl: `/${loc.segment}/`,
+    langSwitcher: langSwitcher(loc),
+    arrowLg: ARROW(16),
+    arrowSm: ARROW(14),
+    phoneHref: c.contact.phone.replace(/[^\d+]/g, ''),
+  });
+}
+
 function build() {
   const dist = join(ROOT, 'dist');
   rmSync(dist, { recursive: true, force: true });
@@ -255,6 +270,7 @@ function build() {
   const template = readFileSync(join(ROOT, 'src', 'template.html'), 'utf8');
   const partials = readPartials();
   const skeleton = inlinePartials(template, partials);
+  const skeleton_404 = inlinePartials(readFileSync(join(ROOT, 'src', '404.html'), 'utf8'), partials);
 
   for (const loc of LOCALES) {
     const file = join(ROOT, 'content', `${loc.segment}.json`);
@@ -269,6 +285,7 @@ function build() {
       lang: loc.lang,
       segment: loc.segment,
       canonical: urlFor(loc),
+      homeUrl: `/${DEFAULT_LOCALE.segment}/`,
       hreflangLinks: hreflangLinks(loc),
       langSwitcher: langSwitcher(loc),
       langSwitcherMobile: langSwitcher(loc, ' mobile-lang'),
@@ -293,6 +310,13 @@ function build() {
     writeFileSync(join(outDir, 'index.html'), html, 'utf8');
     console.log(`  /${loc.segment}/  lang="${loc.lang}"  ${(Buffer.byteLength(html) / 1024).toFixed(1)} KB`);
   }
+
+  // GitHub Pages serves /404.html for any unmatched path, at any depth, so it
+  // lives at the root and every asset path in it must be absolute. Rendered
+  // from the default locale: there is only one error page for the whole site.
+  const nf = renderNotFound(skeleton_404, partials);
+  writeFileSync(join(dist, '404.html'), nf, 'utf8');
+  console.log(`  /404.html          ${(Buffer.byteLength(nf) / 1024).toFixed(1)} KB`);
 
   const assets = copyDir(join(ROOT, 'assets'), join(dist, 'assets'));
   writeFileSync(join(dist, 'sitemap.xml'), sitemap(), 'utf8');

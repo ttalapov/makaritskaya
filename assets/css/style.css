@@ -403,3 +403,22 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   /* Section headings */
   .section-heading { font-size: 1.8rem; }
 }
+
+/* ─── 404 ─── */
+.nav-minimal { display: flex; align-items: center; justify-content: space-between; padding: 1.6rem 4rem; border-bottom: 1px solid var(--border); background: var(--cream); }
+.notfound { display: flex; flex-direction: column; align-items: center; text-align: center; min-height: 72vh; justify-content: center; padding: 4rem 1.5rem; }
+.notfound-code { font-family: 'Cormorant Garamond', serif; font-size: clamp(6rem, 18vw, 11rem); font-weight: 300; line-height: 1; color: var(--sage-light); letter-spacing: 0.04em; user-select: none; }
+.notfound .section-label { margin-top: -0.6rem; }
+.notfound-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4.5vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--ink); margin-bottom: 1.2rem; }
+.notfound-heading em { font-style: italic; color: var(--sage); }
+.notfound-desc { font-size: 1rem; font-weight: 300; color: var(--ink-muted); line-height: 1.8; max-width: 460px; margin-bottom: 2.4rem; }
+.notfound-actions { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.notfound-contact { margin-top: 2.8rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem 1.2rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--ink-muted); }
+.notfound-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--sage-light); padding-bottom: 1px; transition: color 0.2s, border-color 0.2s; }
+.notfound-contact a:hover { color: var(--sage); border-color: var(--sage); }
+@media (max-width: 768px) {
+  .nav-minimal { padding: 1.1rem 1.25rem; }
+  .notfound { min-height: 66vh; padding: 4rem 1rem 3rem; }
+  .notfound-actions { flex-direction: column; width: 100%; }
+  .notfound-actions .btn-primary { width: 100%; justify-content: center; }
+}
