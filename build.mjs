@@ -23,8 +23,8 @@ const SITE = 'https://makaritskaya.pp.ua';
 // No template touched.
 // ---------------------------------------------------------------------------
 const LOCALES = [
-  { segment: 'ua', lang: 'uk', label: 'УКР' },
-  { segment: 'ru', lang: 'ru', label: 'РУС' },
+  { segment: 'ua', lang: 'uk', label: 'УКР', ogLocale: 'uk_UA' },
+  { segment: 'ru', lang: 'ru', label: 'РУС', ogLocale: 'ru_RU' },
 ];
 const DEFAULT_LOCALE = LOCALES[0];   // also the x-default target
 
@@ -143,7 +143,8 @@ function fill(html, values) {
 
 /** Generated markup, not authored copy. */
 const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm',
-  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock', 'iconClose']);
+  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock', 'iconClose',
+  'ogLocaleAlternates']);
 
 // ---------------------------------------------------------------------------
 // blocks built from structured content
@@ -293,6 +294,8 @@ function build() {
   const assets = copyDir(join(ROOT, 'assets'), join(dist, 'assets'));
   const cssHref = fingerprint(dist, join('assets', 'css', 'style.css'));
   const jsHref = fingerprint(dist, join('assets', 'js', 'main.js'));
+  const ogHref = Object.fromEntries(LOCALES.map((l) =>
+    [l.segment, fingerprint(dist, join('assets', 'img', `og-${l.segment}.jpg`))]));
 
   for (const loc of LOCALES) {
     const file = join(ROOT, 'content', `${loc.segment}.json`);
@@ -308,6 +311,10 @@ function build() {
       segment: loc.segment,
       cssHref,
       jsHref,
+      ogLocale: loc.ogLocale,
+      ogLocaleAlternates: LOCALES.filter((l) => l !== loc)
+        .map((l) => `<meta property="og:locale:alternate" content="${l.ogLocale}">`).join('\n'),
+      ogImage: SITE + ogHref[loc.segment],
       canonical: urlFor(loc),
       homeUrl: `/${DEFAULT_LOCALE.segment}/`,
       hreflangLinks: hreflangLinks(loc),
@@ -350,6 +357,7 @@ function build() {
   console.log(`  assets: ${assets} files`);
   console.log(`  ${cssHref}`);
   console.log(`  ${jsHref}`);
+  for (const l of LOCALES) console.log(`  ${ogHref[l.segment]}`);
   console.log(`  sitemap.xml, robots.txt, CNAME, .nojekyll`);
 
   if (todos.length) {
