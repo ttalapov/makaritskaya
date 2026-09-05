@@ -4,48 +4,36 @@
       <p class="section-label reveal">{{contact.label}}</p>
       <h2 class="section-heading reveal reveal-delay-1">{{{contact.heading}}}</h2>
       <p class="section-sub reveal reveal-delay-2">{{contact.sub}}</p>
-      <div class="contact-info-items reveal reveal-delay-3">
-        <a href="tel:{{phoneHref}}" class="contact-row">
-          <div class="contact-icon" aria-hidden="true">📞</div>
-          <div>
-            <div class="contact-label">{{contact.phoneLabel}}</div>
-            <div class="contact-val">{{contact.phone}}</div>
-          </div>
-        </a>
-        <a href="{{contact.instagramUrl}}" class="contact-row" rel="me noopener" target="_blank">
-          <div class="contact-icon" aria-hidden="true">📷</div>
-          <div>
-            <div class="contact-label">Instagram</div>
-            <div class="contact-val">{{contact.instagramHandle}}</div>
-          </div>
-        </a>
-        <div class="contact-row">
-          <div class="contact-icon" aria-hidden="true">📍</div>
-          <div>
-            <div class="contact-label">{{contact.cityLabel}}</div>
-            <div class="contact-val">{{contact.cityVal}}</div>
-          </div>
+    </div>
+    <div class="contact-info-items reveal reveal-delay-2">
+      <a href="tel:{{phoneHref}}" class="contact-row">
+        <div class="contact-icon" aria-hidden="true">📞</div>
+        <div>
+          <div class="contact-label">{{contact.phoneLabel}}</div>
+          <div class="contact-val">{{contact.phone}}</div>
         </div>
-        <div class="contact-row">
-          <div class="contact-icon" aria-hidden="true">🕐</div>
-          <div>
-            <div class="contact-label">{{contact.hoursLabel}}</div>
-            <div class="contact-val">{{contact.hoursVal}}</div>
-          </div>
+      </a>
+      <a href="{{contact.instagramUrl}}" class="contact-row" rel="me noopener" target="_blank">
+        <div class="contact-icon" aria-hidden="true">📷</div>
+        <div>
+          <div class="contact-label">Instagram</div>
+          <div class="contact-val">{{contact.instagramHandle}}</div>
+        </div>
+      </a>
+      <div class="contact-row">
+        <div class="contact-icon" aria-hidden="true">📍</div>
+        <div>
+          <div class="contact-label">{{contact.cityLabel}}</div>
+          <div class="contact-val">{{contact.cityVal}}</div>
         </div>
       </div>
-    </div>
-    <div class="reveal reveal-delay-2">
-      <p class="form-heading">{{contact.formHeading}}</p>
-      <form class="contact-form" action="{{contact.formAction}}" method="post">
-        <div class="form-group"><label class="visually-hidden" for="f-name">{{contact.formName}}</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required placeholder="{{contact.formName}}"></div>
-        <div class="form-group"><label class="visually-hidden" for="f-phone">{{contact.formPhone}}</label>
-          <input id="f-phone" name="phone" type="tel" autocomplete="tel" required placeholder="{{contact.formPhone}}"></div>
-        <div class="form-group"><label class="visually-hidden" for="f-msg">{{contact.formMessage}}</label>
-          <textarea id="f-msg" name="message" rows="3" placeholder="{{contact.formMessage}}"></textarea></div>
-        <button class="form-submit" type="submit">{{contact.formSubmit}}</button>
-      </form>
+      <div class="contact-row">
+        <div class="contact-icon" aria-hidden="true">🕐</div>
+        <div>
+          <div class="contact-label">{{contact.hoursLabel}}</div>
+          <div class="contact-val">{{contact.hoursVal}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

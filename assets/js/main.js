@@ -43,20 +43,7 @@ function initBurger() {
   });
 }
 
-// ─── CONTACT FORM ────────────────────────────────────────────
-// No endpoint is configured yet (contact.formAction is empty in content/*.json).
-// Without this guard the form would POST to the current URL and the visitor
-// would land on a GitHub Pages error page.
-function initForm() {
-  const form = document.querySelector('.contact-form');
-  if (!form) return;
-  if (!form.getAttribute('action')) {
-    form.addEventListener('submit', (e) => e.preventDefault());
-  }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initBurger();
-  initForm();
 });
