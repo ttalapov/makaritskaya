@@ -27,8 +27,9 @@ const LOCALES = [
 ];
 const DEFAULT_LOCALE = LOCALES[0];   // also the x-default target
 
-// Presentation, not copy: identical in every language, so it lives here and
-// the content files only carry the group's icon key.
+// Every icon on the site, in one place. Presentation, not copy: identical in
+// every language, so content files carry only the key. 24x24, 1.5 stroke,
+// currentColor - the container decides the colour.
 const ICONS = {
   g1: '<circle cx="12" cy="12" r="2"/><path d="M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4M4.9 19.1a10 10 0 0 1 0-14.2M19.1 4.9a10 10 0 0 1 0 14.2"/>',
   g2: '<path d="M4 19c0-4.5 3.5-6 7-6s7-1.5 7-6"/><circle cx="4" cy="19" r="1.8"/><circle cx="18" cy="7" r="1.8"/>',
@@ -37,6 +38,26 @@ const ICONS = {
   g5: '<path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M6 10.2V20h12v-9.8"/><path d="M10 20v-5h4v5"/>',
   g6: '<path d="M9 17V5.5l10-2V15"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/>',
   g7: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v14H6.5A2.5 2.5 0 0 0 4 19.5Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19v4H6.5A2.5 2.5 0 0 1 4 19.5Z"/><path d="M9 7.5h6"/>',
+  cap:        '<path d="M12 4 2.5 8.5 12 13l9.5-4.5z"/><path d="M6 10.5v4.8c0 .5.3 1 .8 1.2 1.6.8 3.4 1.2 5.2 1.2s3.6-.4 5.2-1.2c.5-.2.8-.7.8-1.2v-4.8"/><path d="M21.5 8.5v5.2"/>',
+  evidence:   '<path d="M6.5 3h8L19 7.5V21H6.5z"/><path d="M14.5 3v4.5H19"/><path d="m9.5 13.8 2 2 3.6-4.4"/>',
+  family:     '<circle cx="8.4" cy="7.4" r="3"/><path d="M3.4 20v-1.6a5 5 0 0 1 10 0V20"/><circle cx="17.2" cy="11.2" r="2.2"/><path d="M13.8 20v-1.1a3.4 3.4 0 0 1 6.8 0V20"/>',
+  chart:      '<path d="M4 20h16"/><path d="M7.5 20v-5.5M12 20v-9.5M16.5 20v-7.5"/><path d="m6 8.5 4.5-4 3.5 3L19 3"/>',
+  globe:      '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.2 2.4 3.4 5.4 3.4 8.5S14.2 18.1 12 20.5c-2.2-2.4-3.4-5.4-3.4-8.5S9.8 5.9 12 3.5Z"/>',
+  team:       '<circle cx="6.5" cy="6.8" r="2.5"/><circle cx="17.5" cy="6.8" r="2.5"/><circle cx="12" cy="17.2" r="2.5"/><path d="m8.6 8.7 2 6M15.4 8.7l-2 6M9 6.8h6"/>',
+  shield:     '<path d="M12 3 5 5.9v5.6c0 4.2 2.9 8.1 7 9.5 4.1-1.4 7-5.3 7-9.5V5.9z"/>',
+  pacifier:   '<circle cx="12" cy="5.6" r="2.7"/><path d="M12 8.3v2.4"/><path d="M5.6 10.7h12.8"/><circle cx="12" cy="15.7" r="4.4"/>',
+  blocks:     '<rect x="8" y="3.3" width="8" height="8" rx="1.6"/><rect x="3.3" y="12.7" width="8" height="8" rx="1.6"/><rect x="12.7" y="12.7" width="8" height="8" rx="1.6"/>',
+  backpack:   '<path d="M5.5 10A4.5 4.5 0 0 1 10 5.5h4A4.5 4.5 0 0 1 18.5 10v10.5h-13z"/><path d="M9.5 5.5V4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1.5"/><path d="M9.5 14h5"/>',
+  adult:      '<circle cx="12" cy="7.4" r="3.6"/><path d="M5 20.6v-1a7 7 0 0 1 14 0v1"/>',
+  phone:      '<path d="M6.4 3.5h3.1l1.5 3.9-2 1.5a11.2 11.2 0 0 0 5.1 5.1l1.5-2 3.9 1.5v3.1a2 2 0 0 1-2.2 2A16.6 16.6 0 0 1 4.4 5.7a2 2 0 0 1 2-2.2Z"/>',
+  instagram:  '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="16.9" cy="7.1" r=".9"/>',
+  pin:        '<path d="M12 21s6.8-5.7 6.8-11A6.8 6.8 0 0 0 5.2 10c0 5.3 6.8 11 6.8 11Z"/><circle cx="12" cy="10" r="2.6"/>',
+  clock:      '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.9v5.4l3.3 2"/>',
+};
+const ICON = (key) => {
+  if (!(key in ICONS)) throw new Error(`unknown icon: ${key}`);
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ` +
+    `stroke-linecap="round" stroke-linejoin="round">${ICONS[key]}</svg>`;
 };
 const ARROW = (s) =>
   `<svg width="${s}" height="${s}" fill="none" viewBox="0 0 24 24" aria-hidden="true">` +
@@ -119,7 +140,8 @@ function fill(html, values) {
 }
 
 /** Generated markup, not authored copy. */
-const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm']);
+const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm',
+  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock']);
 
 // ---------------------------------------------------------------------------
 // blocks built from structured content
@@ -129,7 +151,7 @@ const renderStats = (stats) => stats.map((s) =>
 ).join('\n');
 
 const renderCreds = (creds) => creds.map((c) =>
-  `      <div class="cred-item"><div class="cred-icon" aria-hidden="true">${c.icon}</div>` +
+  `      <div class="cred-item"><div class="cred-icon" aria-hidden="true">${ICON(c.icon)}</div>` +
   `<div class="cred-text"><strong>${esc(c.title)}</strong>${esc(c.desc)}</div></div>`
 ).join('\n');
 
@@ -140,8 +162,7 @@ const renderMethodGroups = (groups) => groups.map((g, i) => {
     const desc = x.desc ? `<span class="method-item-desc">${esc(x.desc)}</span>` : '';
     return `        <li><span class="method-item-name">${esc(x.name)}${note}</span>${desc}</li>`;
   }).join('\n');
-  const svg = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ` +
-    `stroke-linecap="round" stroke-linejoin="round">${ICONS[g.icon]}</svg>`;
+  const svg = ICON(g.icon);
   return `    <article class="method-card reveal${delay}">
       <span class="method-icon" aria-hidden="true">${svg}</span>
       <h3 class="method-title">${esc(g.title)}</h3>
@@ -160,13 +181,13 @@ const renderSteps = (steps) => steps.map((s, i) =>
 ).join('\n');
 
 const renderFeatures = (features) => features.map((f) =>
-  `      <div class="feat-block"><div class="feat-icon" aria-hidden="true">${f.icon}</div>` +
+  `      <div class="feat-block"><div class="feat-icon" aria-hidden="true">${ICON(f.icon)}</div>` +
   `<div class="feat-title">${esc(f.title)}</div><div class="feat-desc">${esc(f.desc)}</div></div>`
 ).join('\n');
 
 const renderWhoCards = (cards) => cards.map((c, i) => {
   const delay = i === 0 ? '' : ` reveal-delay-${i % 4}`;
-  return `    <div class="who-card reveal${delay}"><div class="who-icon" aria-hidden="true">${c.icon}</div>` +
+  return `    <div class="who-card reveal${delay}"><div class="who-icon" aria-hidden="true">${ICON(c.icon)}</div>` +
     `<div class="who-title">${esc(c.title)}</div><div class="who-desc">${esc(c.desc)}</div></div>`;
 }).join('\n');
 
@@ -251,6 +272,10 @@ function build() {
       hreflangLinks: hreflangLinks(loc),
       langSwitcher: langSwitcher(loc),
       langSwitcherMobile: langSwitcher(loc, ' mobile-lang'),
+      iconPhone: ICON('phone'),
+      iconInstagram: ICON('instagram'),
+      iconPin: ICON('pin'),
+      iconClock: ICON('clock'),
       arrowLg: ARROW(16),
       arrowSm: ARROW(14),
       statsHtml: renderStats(c.about.stats),
