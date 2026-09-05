@@ -3,8 +3,9 @@
 // Plain Node, no dependencies, no framework, no i18n library.
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, copyFileSync, rmSync, existsSync } from 'node:fs';
-import { join, dirname, relative } from 'node:path';
+import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
 
 const ROOT = dirname(fileURLToPath(import.meta.url));
 const SITE = 'https://makaritskaya.pp.ua';
@@ -249,11 +250,27 @@ function copyDir(src, dest) {
 }
 
 /** One error page for the site, in the default language. */
-function renderNotFound(skeleton, partials) {
+/** Content hash in the filename: a changed asset is always a new URL, so a
+ *  cached copy can never shadow a fix, and an unchanged one stays cached. */
+function fingerprint(dist, relPath) {
+  const abs = join(dist, relPath);
+  const body = readFileSync(abs);
+  const hash = createHash('sha256').update(body).digest('hex').slice(0, 8);
+  const dot = relPath.lastIndexOf('.');
+  const hashed = `${relPath.slice(0, dot)}.${hash}${relPath.slice(dot)}`;
+  // copy rather than move: pages cached before this deploy still reference the
+  // unhashed path, and an unstyled page is worse than a stale one
+  copyFileSync(abs, join(dist, hashed));
+  return '/' + hashed.split(sep).join('/');
+}
+
+function renderNotFound(skeleton, partials, cssHref, jsHref) {
   const loc = DEFAULT_LOCALE;
   const c = walk(JSON.parse(readFileSync(join(ROOT, 'content', `${loc.segment}.json`), 'utf8')), loc.segment);
   return fill(skeleton, {
     ...c,
+    cssHref,
+    jsHref,
     lang: loc.lang,
     homeUrl: `/${loc.segment}/`,
     langSwitcher: langSwitcher(loc),
@@ -273,6 +290,10 @@ function build() {
   const skeleton = inlinePartials(template, partials);
   const skeleton_404 = inlinePartials(readFileSync(join(ROOT, 'src', '404.html'), 'utf8'), partials);
 
+  const assets = copyDir(join(ROOT, 'assets'), join(dist, 'assets'));
+  const cssHref = fingerprint(dist, join('assets', 'css', 'style.css'));
+  const jsHref = fingerprint(dist, join('assets', 'js', 'main.js'));
+
   for (const loc of LOCALES) {
     const file = join(ROOT, 'content', `${loc.segment}.json`);
     if (!existsSync(file)) {
@@ -285,6 +306,8 @@ function build() {
       ...c,
       lang: loc.lang,
       segment: loc.segment,
+      cssHref,
+      jsHref,
       canonical: urlFor(loc),
       homeUrl: `/${DEFAULT_LOCALE.segment}/`,
       hreflangLinks: hreflangLinks(loc),
@@ -316,16 +339,17 @@ function build() {
   // GitHub Pages serves /404.html for any unmatched path, at any depth, so it
   // lives at the root and every asset path in it must be absolute. Rendered
   // from the default locale: there is only one error page for the whole site.
-  const nf = renderNotFound(skeleton_404, partials);
+  const nf = renderNotFound(skeleton_404, partials, cssHref, jsHref);
   writeFileSync(join(dist, '404.html'), nf, 'utf8');
   console.log(`  /404.html          ${(Buffer.byteLength(nf) / 1024).toFixed(1)} KB`);
 
-  const assets = copyDir(join(ROOT, 'assets'), join(dist, 'assets'));
   writeFileSync(join(dist, 'sitemap.xml'), sitemap(), 'utf8');
   writeFileSync(join(dist, 'robots.txt'), robots(), 'utf8');
   writeFileSync(join(dist, 'CNAME'), 'makaritskaya.pp.ua\n', 'utf8');
   writeFileSync(join(dist, '.nojekyll'), '', 'utf8');
   console.log(`  assets: ${assets} files`);
+  console.log(`  ${cssHref}`);
+  console.log(`  ${jsHref}`);
   console.log(`  sitemap.xml, robots.txt, CNAME, .nojekyll`);
 
   if (todos.length) {
