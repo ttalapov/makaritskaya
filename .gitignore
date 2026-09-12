@@ -21,3 +21,6 @@ sources/
 
 # fonts fetched by tools/og-card.py on first run
 tools/.fonts/
+
+# local working notes, deliberately not shared
+HANDOFF.md
