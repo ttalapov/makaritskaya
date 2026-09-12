@@ -167,8 +167,10 @@ const renderMethodGroups = (groups) => groups.map((g, i) => {
   }).join('\n');
   const svg = ICON(g.icon);
   return `    <article class="method-card reveal${delay}">
-      <span class="method-icon" aria-hidden="true">${svg}</span>
-      <h3 class="method-title">${esc(g.title)}</h3>
+      <div class="method-head">
+        <span class="method-icon" aria-hidden="true">${svg}</span>
+        <h3 class="method-title">${esc(g.title)}</h3>
+      </div>
       <p class="method-lead">${esc(g.lead)}</p>
       <ul class="method-list">
 ${items}
