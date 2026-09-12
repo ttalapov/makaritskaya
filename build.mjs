@@ -188,7 +188,9 @@ const renderFeatures = (features) => features.map((f) =>
   `<div class="feat-title">${esc(f.title)}</div><div class="feat-desc">${esc(f.desc)}</div></div>`
 ).join('\n');
 
-const renderWhoCards = (cards) => cards.map((c, i) => {
+// `hidden: true` keeps an entry in the content file without publishing it -
+// JSON has no comments, and some of these come back later.
+const renderWhoCards = (cards) => cards.filter((c) => !c.hidden).map((c, i) => {
   const delay = i === 0 ? '' : ` reveal-delay-${i % 4}`;
   return `    <div class="who-card reveal${delay}"><div class="who-icon" aria-hidden="true">${ICON(c.icon)}</div>` +
     `<div class="who-title">${esc(c.title)}</div><div class="who-desc">${esc(c.desc)}</div></div>`;
