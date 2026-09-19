@@ -232,7 +232,8 @@ footer .footer-name { font-family: var(--font-serif); font-size: 1rem; color: rg
 
 /* ─── ANIMATIONS ─── */
 /* Hidden only once JS has announced itself (the inline script in <head> sets
-   html.js): with JS switched off the content simply stays visible. */
+   html.js): with JS switched off the content simply stays visible, and if
+   main.js fails to load its onerror drops html.js again. */
 .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
 .js .reveal.visible { opacity: 1; transform: none; }
 .reveal-delay-1 { transition-delay: 0.1s; }
