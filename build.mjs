@@ -28,6 +28,20 @@ const LOCALES = [
 ];
 const DEFAULT_LOCALE = LOCALES[0];   // also the x-default target
 
+// Facts for the structured data that are the same in every language and have
+// no place in the visible copy. Only what the client has confirmed.
+//   languages - the FAQ answer: Ukrainian or Russian, English or Polish on request
+//   hours     - must agree with contact.hoursVal; the build checks it
+// Deliberately absent: street address (not published), alumniOf (university
+// and year stay off the site until the diploma is), priceRange (not agreed).
+const PRACTICE = {
+  languages: ['uk', 'ru', 'en', 'pl'],
+  hours: [
+    { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '09:00', closes: '19:00' },
+    { days: ['Saturday'], opens: '10:00', closes: '15:00' },
+  ],
+};
+
 // Every icon on the site, in one place. Presentation, not copy: identical in
 // every language, so content files carry only the key. 24x24, 1.5 stroke,
 // currentColor - the container decides the colour.
@@ -144,7 +158,7 @@ function fill(html, values) {
 /** Generated markup, not authored copy. */
 const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm',
   'iconPhone', 'iconInstagram', 'iconPin', 'iconClock', 'iconClose',
-  'ogLocaleAlternates']);
+  'ogLocaleAlternates', 'jsonLd']);
 
 // ---------------------------------------------------------------------------
 // blocks built from structured content
@@ -197,6 +211,96 @@ const renderWhoCards = (cards) => cards.filter((c) => !c.hidden).map((c, i) => {
   return `    <div class="who-card reveal${delay}"><div class="who-icon" aria-hidden="true">${ICON(c.icon)}</div>` +
     `<div class="who-title">${esc(c.title)}</div><div class="who-desc">${esc(c.desc)}</div></div>`;
 }).join('\n');
+
+const visible = (items) => items.filter((x) => !x.hidden);
+
+// Native <details>: works without JS, keyboard and screen readers get it for
+// free, and the answers stay in the HTML for crawlers.
+const renderFaq = (items) => visible(items).map((x) =>
+  `      <details class="faq-item">
+        <summary><h3 class="faq-q">${esc(x.q)}</h3><span class="faq-toggle" aria-hidden="true"></span></summary>
+        <p class="faq-a">${esc(x.a)}</p>
+      </details>`
+).join('\n');
+
+// ---------------------------------------------------------------------------
+// structured data: one @graph per page, built from the same content as the
+// visible copy so the two cannot drift apart
+// ---------------------------------------------------------------------------
+const PERSON_ID = `${SITE}/#person`;
+const PRACTICE_ID = `${SITE}/#practice`;
+
+function checkHours(c, segment) {
+  for (const h of PRACTICE.hours) {
+    for (const t of [h.opens, h.closes]) {
+      if (!c.contact.hoursVal.includes(t.replace(/^0/, ''))) {
+        throw new Error(`${segment}.json contact.hoursVal does not show ${t} - update PRACTICE.hours in build.mjs too`);
+      }
+    }
+  }
+}
+
+function jsonLd(loc, c, contents, ogImage) {
+  const url = urlFor(loc);
+  const phone = c.contact.phone.replace(/[^\d+]/g, '');
+  const city = c.contact.cityVal.split(',')[0].trim();
+  const fullName = (x) => `${x.hero.nameFirst} ${x.hero.nameLast}`;
+  const graph = [
+    {
+      '@type': 'Person',
+      '@id': PERSON_ID,
+      name: fullName(c),
+      alternateName: Object.entries(contents).filter(([s]) => s !== loc.segment).map(([, x]) => fullName(x)),
+      jobTitle: c.hero.title,
+      image: `${SITE}/assets/img/hero-yuliia-334.png`,
+      url,
+      telephone: phone,
+      sameAs: [c.contact.instagramUrl],
+      knowsLanguage: PRACTICE.languages,
+      knowsAbout: [
+        c.hero.eyebrow.split('·')[0].trim(),
+        ...c.methods.groups.flatMap((g) => g.items.map((x) => x.name)),
+      ],
+      hasCredential: c.about.creds.map((x) => ({
+        '@type': 'EducationalOccupationalCredential',
+        credentialCategory: 'degree',
+        name: x.desc,
+      })),
+      worksFor: { '@id': PRACTICE_ID },
+    },
+    {
+      '@type': 'LocalBusiness',
+      '@id': PRACTICE_ID,
+      name: c.meta.siteName,
+      description: c.meta.description,
+      url,
+      image: ogImage,
+      telephone: phone,
+      sameAs: [c.contact.instagramUrl],
+      address: { '@type': 'PostalAddress', addressLocality: city, addressCountry: 'UA' },
+      areaServed: { '@type': 'City', name: city },
+      availableLanguage: PRACTICE.languages,
+      openingHoursSpecification: PRACTICE.hours.map((h) => ({
+        '@type': 'OpeningHoursSpecification', dayOfWeek: h.days, opens: h.opens, closes: h.closes,
+      })),
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${url}#faq`,
+      url,
+      inLanguage: loc.lang,
+      about: { '@id': PERSON_ID },
+      mainEntity: visible(c.faq.items).map((x) => ({
+        '@type': 'Question',
+        name: x.q,
+        acceptedAnswer: { '@type': 'Answer', text: x.a },
+      })),
+    },
+  ];
+  // "<" escaped so no string in the content can close the <script> early
+  return JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }, null, 2)
+    .replace(/</g, '\\u003c');
+}
 
 // ---------------------------------------------------------------------------
 // per-locale link plumbing, all derived from LOCALES
@@ -301,13 +405,22 @@ function build() {
   const ogHref = Object.fromEntries(LOCALES.map((l) =>
     [l.segment, fingerprint(dist, join('assets', 'img', `og-${l.segment}.jpg`))]));
 
+  // read every language first: each page's structured data names the others
+  const contents = {};
   for (const loc of LOCALES) {
     const file = join(ROOT, 'content', `${loc.segment}.json`);
     if (!existsSync(file)) {
       console.warn(`  skip /${loc.segment}/  (content/${loc.segment}.json not found)`);
       continue;
     }
-    const c = walk(JSON.parse(readFileSync(file, 'utf8')), loc.segment);
+    contents[loc.segment] = walk(JSON.parse(readFileSync(file, 'utf8')), loc.segment);
+  }
+
+  for (const loc of LOCALES) {
+    const c = contents[loc.segment];
+    if (!c) continue;
+    checkHours(c, loc.segment);
+    const ogImage = SITE + ogHref[loc.segment];
 
     const values = {
       ...c,
@@ -318,7 +431,8 @@ function build() {
       ogLocale: loc.ogLocale,
       ogLocaleAlternates: LOCALES.filter((l) => l !== loc)
         .map((l) => `<meta property="og:locale:alternate" content="${l.ogLocale}">`).join('\n'),
-      ogImage: SITE + ogHref[loc.segment],
+      ogImage,
+      jsonLd: jsonLd(loc, c, contents, ogImage),
       canonical: urlFor(loc),
       homeUrl: `/${DEFAULT_LOCALE.segment}/`,
       hreflangLinks: hreflangLinks(loc),
@@ -337,6 +451,7 @@ function build() {
       stepsHtml: renderSteps(c.approach.steps),
       featuresHtml: renderFeatures(c.approach.features),
       whoCardsHtml: renderWhoCards(c.who.cards),
+      faqHtml: renderFaq(c.faq.items),
       phoneHref: c.contact.phone.replace(/[^\d+]/g, ''),
     };
 

@@ -53,7 +53,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 }
 .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 600; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
 .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-.nav-links a { font-size: 0.82rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
+.nav-links a { white-space: nowrap; font-size: 0.82rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover { color: var(--sage); }
 .nav-right { display: flex; align-items: center; gap: 1rem; }
 .nav-cta { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; color: var(--white); background: var(--sage); padding: 0.55rem 1.4rem; border-radius: 2rem; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
@@ -169,6 +169,25 @@ section { padding: 7rem 4rem; }
 .who-card:hover .who-icon { background: var(--white); }
 .who-title { font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 0.5rem; }
 .who-desc { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.6; }
+
+/* ─── FAQ ─── */
+.faq { background: var(--cream); }
+.faq-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.5fr; gap: 5rem; align-items: start; }
+.faq-header { position: sticky; top: 7rem; }
+.faq-list { border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); }
+.faq-item summary { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.4rem 0; cursor: pointer; list-style: none; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 2px solid var(--sage); outline-offset: 4px; border-radius: 4px; }
+.faq-q { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; line-height: 1.3; color: var(--ink); transition: color 0.2s; }
+.faq-item summary:hover .faq-q { color: var(--sage); }
+.faq-toggle { position: relative; flex: 0 0 32px; height: 32px; border-radius: 50%; border: 1px solid var(--sage-light); transition: background 0.2s, border-color 0.2s; }
+.faq-toggle::before, .faq-toggle::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; background: var(--sage); transform: translate(-50%, -50%); transition: transform 0.3s, background 0.2s; }
+.faq-toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+.faq-item[open] .faq-toggle { background: var(--sage); border-color: var(--sage); }
+.faq-item[open] .faq-toggle::before, .faq-item[open] .faq-toggle::after { background: var(--white); }
+.faq-item[open] .faq-toggle::after { transform: translate(-50%, -50%); }
+.faq-a { font-size: 0.95rem; font-weight: 300; color: var(--ink-muted); line-height: 1.8; max-width: 620px; padding: 0 3.5rem 1.6rem 0; }
 
 /* ─── CONTACT ─── */
 .contact { background: var(--sage-pale); }
@@ -297,6 +316,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
   .site-nav { padding: 1rem 2rem; }
+  .nav-links { gap: 1.25rem; }
   section { padding: 5rem 2.5rem; }
 
   /* Hero */
@@ -316,11 +336,23 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   /* Who */
   .who-grid { grid-template-columns: repeat(2, 1fr); }
 
+  /* FAQ */
+  .faq-inner { gap: 3rem; }
+
   /* Contact */
   .contact-inner { gap: 3rem; }
 
   /* Footer */
   footer { padding: 2rem 2.5rem; }
+}
+
+/* Five links, the switcher and the CTA stop fitting in one row below ~900px:
+   hand the navigation to the burger before they collide. */
+@media (max-width: 940px) {
+  .nav-links { display: none; }
+  .nav-right { display: none; }
+  .burger { display: flex; }
+  .mobile-menu { display: flex; }
 }
 
 /* ═══════════════════════════════════════════════
@@ -375,6 +407,12 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 
   /* Who */
   .who-grid { grid-template-columns: 1fr 1fr; }
+
+  /* FAQ */
+  .faq-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .faq-header { position: static; }
+  .faq-q { font-size: 1.25rem; }
+  .faq-a { padding-right: 0; }
 
   /* Contact */
   .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
