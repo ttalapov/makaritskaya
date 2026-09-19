@@ -2,7 +2,7 @@
 // Static build: template + partials + content/<segment>.json -> dist/<segment>/index.html
 // Plain Node, no dependencies, no framework, no i18n library.
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, copyFileSync, rmSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, copyFileSync, renameSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname, relative, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
@@ -358,21 +358,24 @@ function copyDir(src, dest) {
   return n;
 }
 
-/** One error page for the site, in the default language. */
 /** Content hash in the filename: a changed asset is always a new URL, so a
- *  cached copy can never shadow a fix, and an unchanged one stays cached. */
+ *  stale cached asset can never be served with a new page, and an unchanged
+ *  one stays cached across deploys.
+ *  The reverse case is not covered: every deploy replaces the whole site, so
+ *  a page cached from the previous deploy asks for a hash that is gone. The
+ *  window is short - GitHub Pages caches HTML for 10 minutes and Cloudflare
+ *  does not cache HTML by default - and a reload fixes it. */
 function fingerprint(dist, relPath) {
   const abs = join(dist, relPath);
   const body = readFileSync(abs);
   const hash = createHash('sha256').update(body).digest('hex').slice(0, 8);
   const dot = relPath.lastIndexOf('.');
   const hashed = `${relPath.slice(0, dot)}.${hash}${relPath.slice(dot)}`;
-  // copy rather than move: pages cached before this deploy still reference the
-  // unhashed path, and an unstyled page is worse than a stale one
-  copyFileSync(abs, join(dist, hashed));
+  renameSync(abs, join(dist, hashed));
   return '/' + hashed.split(sep).join('/');
 }
 
+/** One error page for the site, in the default language. */
 function renderNotFound(skeleton, partials, cssHref, jsHref) {
   const loc = DEFAULT_LOCALE;
   const c = walk(JSON.parse(readFileSync(join(ROOT, 'content', `${loc.segment}.json`), 'utf8')), loc.segment);
