@@ -28,13 +28,15 @@ function initReveal() {
 // "10+" counts the 10 and keeps the +; "∞" has nothing to count and is left
 // alone, so it just fades in with its card.
 function initCounters() {
-  const nums = [...document.querySelectorAll('.stat-num')]
+  const block = document.querySelector('.about-stats');
+  if (!block) return;
+  const nums = [...block.querySelectorAll('.stat-num')]
     .map((el) => ({ el, m: el.textContent.trim().match(/^(\d+)(.*)$/) }))
     .filter((x) => x.m);
   if (!nums.length) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
 
-  const DURATION = 900;
+  const DURATION = 1500;
   const run = ({ el, m }) => {
     const target = Number(m[1]);
     const suffix = m[2];
@@ -60,14 +62,13 @@ function initCounters() {
     requestAnimationFrame(step);
   };
 
+  // the whole block is watched, not each tile, so all four start together
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (!e.isIntersecting) return;
-      observer.unobserve(e.target);
-      run(nums.find((x) => x.el === e.target));
-    });
-  }, { threshold: 0.6 });
-  nums.forEach((x) => observer.observe(x.el));
+    if (!entries.some((e) => e.isIntersecting)) return;
+    observer.disconnect();
+    nums.forEach(run);
+  }, { threshold: 0.75 });
+  observer.observe(block);
 }
 
 // ─── BURGER MENU ─────────────────────────────────────────────
