@@ -67,11 +67,10 @@ const ICONS = {
   instagram:  '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="16.9" cy="7.1" r=".9"/>',
   pin:        '<path d="M12 21s6.8-5.7 6.8-11A6.8 6.8 0 0 0 5.2 10c0 5.3 6.8 11 6.8 11Z"/><circle cx="12" cy="10" r="2.6"/>',
   clock:      '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.9v5.4l3.3 2"/>',
-  close:       '<path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/>',
 };
 /** Icons the templates ask for by name rather than through content. Listed
  *  here so the unused-icon check below can see them too. */
-const DIRECT_ICONS = { iconClose: 'close', iconPhone: 'phone', iconInstagram: 'instagram', iconPin: 'pin', iconClock: 'clock' };
+const DIRECT_ICONS = { iconPhone: 'phone', iconInstagram: 'instagram', iconPin: 'pin', iconClock: 'clock' };
 
 const ICON = (key) => {
   if (!(key in ICONS)) throw new Error(`unknown icon: ${key}`);
@@ -160,7 +159,7 @@ function fill(html, values) {
 
 /** Generated markup, not authored copy. */
 const RAW = new Set(['hreflangLinks', 'langSwitcher', 'langSwitcherMobile', 'arrowLg', 'arrowSm',
-  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock', 'iconClose',
+  'iconPhone', 'iconInstagram', 'iconPin', 'iconClock',
   'ogLocaleAlternates', 'jsonLd']);
 
 // ---------------------------------------------------------------------------
@@ -254,8 +253,11 @@ function checkHours(c, segment) {
 /** An icon nobody references is dead weight that still reads as intentional.
  *  Content carries icons under "icon" keys - including entries hidden from
  *  the page, which stay deliberately. */
-function checkIcons(contents) {
-  const used = new Set(Object.values(DIRECT_ICONS));
+function checkIcons(contents, templates) {
+  // a direct icon counts only while a template still asks for its placeholder
+  const used = new Set(Object.entries(DIRECT_ICONS)
+    .filter(([k]) => templates.includes(`{{${k}}}`))
+    .map(([, v]) => v));
   const collect = (node) => {
     if (Array.isArray(node)) return node.forEach(collect);
     if (node && typeof node === 'object') {
@@ -449,7 +451,7 @@ function build() {
     contents[loc.segment] = walk(JSON.parse(readFileSync(file, 'utf8')), loc.segment);
   }
 
-  checkIcons(contents);
+  checkIcons(contents, skeleton + skeleton_404);
 
   for (const loc of LOCALES) {
     const c = contents[loc.segment];

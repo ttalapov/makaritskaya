@@ -319,13 +319,18 @@ html:not(.js) button.burger, html:not(.js) button.mobile-close { display: none; 
   flex-shrink: 0;
 }
 .mobile-close {
+  position: relative;
   display: inline-flex; align-items: center; justify-content: center;
   width: 40px; height: 40px; margin-right: -6px;
   background: none; border: none; padding: 0; cursor: pointer;
   color: var(--ink); border-radius: 50%;
   transition: background 0.2s, color 0.2s;
 }
-.mobile-close svg { width: 22px; height: 22px; }
+/* Built from the same 22x2 bars as the burger, so the cross matches the shape
+   the burger itself turns into - same length, same thickness. */
+.mobile-close span { position: absolute; left: 50%; top: 50%; width: 22px; height: 2px; background: currentColor; border-radius: 2px; }
+.mobile-close span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+.mobile-close span:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
 .mobile-close:hover { background: var(--sage-pale); color: var(--sage-text); }
 /* Scrolls rather than centring: centring a taller-than-screen column pushed
    the language switcher off the top edge. */
