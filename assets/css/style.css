@@ -217,6 +217,19 @@ section { padding: 7rem 4rem; }
 .faq-item[open] .faq-toggle::before, .faq-item[open] .faq-toggle::after { background: var(--white); }
 .faq-item[open] .faq-toggle::after { transform: translate(-50%, -50%); }
 .faq-a { font-size: 0.95rem; font-weight: 300; color: var(--ink-muted); line-height: 1.8; max-width: 620px; padding: 0 3.5rem 1.6rem 0; }
+/* Native <details> snaps open. Browsers that can animate to an intrinsic
+   height unfold the answer instead; the rest keep the instant toggle, which
+   is the current behaviour, so nothing is lost. */
+@supports (interpolate-size: allow-keywords) and (selector(::details-content)) {
+  :root { interpolate-size: allow-keywords; }
+  .faq-item::details-content {
+    block-size: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: block-size 0.35s ease, opacity 0.3s ease, content-visibility 0.35s allow-discrete;
+  }
+  .faq-item[open]::details-content { block-size: auto; opacity: 1; }
+}
 
 /* ─── CONTACT ─── */
 .contact { background: var(--sage-pale); }
