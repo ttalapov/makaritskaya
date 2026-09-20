@@ -20,52 +20,65 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "assets" / "fonts" / "cormorant-garamond-cyrillic.woff2"
+FONTS = ROOT / "assets" / "fonts"
 OUT = ROOT / "assets" / "img"
-TTF = ROOT / "tools" / ".fonts" / "cormorant-cyrillic.ttf"   # gitignored cache
+CACHE = ROOT / "tools" / ".fonts"                            # gitignored
 
 CREAM = (250, 248, 244)      # --cream
 INK = (30, 36, 32)           # --ink
 SAGE = (110, 146, 124)       # --sage-deep
 TEXT = "ЮМ"
-WEIGHT = 600                 # the header logo's weight
+# The hero sets the name upright and the surname in sage italic, both light;
+# the monogram borrows exactly that pairing.
+WEIGHT = 300
 
 
-def ttf():
-    if not TTF.exists():
-        TTF.parent.mkdir(parents=True, exist_ok=True)
-        font = TTFont(str(SRC))
+def ttf(italic=False):
+    """Unpack one of the site's woff2 files; Pillow cannot read woff2."""
+    name = f"cormorant{'-italic' if italic else ''}-cyrillic"
+    out = CACHE / f"{name}.ttf"
+    if not out.exists():
+        CACHE.mkdir(parents=True, exist_ok=True)
+        font = TTFont(str(FONTS / f"cormorant-garamond{'-italic' if italic else ''}-cyrillic.woff2"))
         font.flavor = None                 # woff2 in, plain ttf out
-        font.save(str(TTF))
-    return ImageFont.truetype
+        font.save(str(out))
+    return out
 
 
-def font_at(px):
-    f = ImageFont.truetype(str(TTF), px)
+def font_at(px, weight=WEIGHT, italic=False):
+    f = ImageFont.truetype(str(ttf(italic)), px)
     try:
-        f.set_variation_by_axes([WEIGHT])  # Cormorant ships as a variable font
+        f.set_variation_by_axes([weight])  # Cormorant ships as a variable font
     except Exception:
         pass                               # a static fallback still draws fine
     return f
 
 
-def draw_icon(size, pad_ratio=0.1, text=TEXT):
+# The М slides over the Ю and sits lower, so the pair reads on a diagonal -
+# the arrangement of the original icon, which this keeps.
+OVERLAP = 0.65    # how far the second letter slides over the first
+DROP = 0.16       # and how far it sits below it, as a share of the type size
+
+
+def draw_icon(size, pad_ratio=0.1, text=TEXT, weight=WEIGHT, overlap=None, drop=None):
     big = size * 8                         # draw large, downsample once
     canvas = Image.new("RGBA", (big, big), CREAM + (255,))
-    fnt = font_at(int(big * 0.62))
+    upright = font_at(int(big * 0.62), weight)
+    cursive = font_at(int(big * 0.62), weight, italic=True)
     layer = Image.new("RGBA", (big, big), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
     y = big * 0.18
     if len(text) == 1:
-        d.text((big * 0.3, y), text, font=fnt, fill=INK + (255,))
+        d.text((big * 0.3, y), text, font=upright, fill=INK + (255,))
     else:
         first, second = text[0], text[1]
-        w1 = d.textlength(first, font=fnt)
-        w2 = d.textlength(second, font=fnt)
-        overlap = w2 * 0.22                # the two letters interlock, as before
-        x = (big - (w1 + w2 - overlap)) / 2
-        d.text((x + w1 - overlap, y), second, font=fnt, fill=SAGE + (255,))
-        d.text((x, y), first, font=fnt, fill=INK + (255,))
+        w1 = d.textlength(first, font=upright)
+        w2 = d.textlength(second, font=cursive)
+        over = w2 * (OVERLAP if overlap is None else overlap)
+        dy = upright.size * (DROP if drop is None else drop)
+        x = (big - (w1 + w2 - over)) / 2
+        d.text((x + w1 - over, y + dy), second, font=cursive, fill=SAGE + (255,))
+        d.text((x, y), first, font=upright, fill=INK + (255,))
 
     ink = layer.crop(layer.getchannel("A").getbbox())
     inner = int(big * (1 - 2 * pad_ratio))
@@ -79,9 +92,10 @@ def main():
     ttf()
     draw_icon(32, pad_ratio=0.07).save(OUT / "favicon-32.png")
     draw_icon(180, pad_ratio=0.16).save(OUT / "apple-touch-icon.png")
-    # 16px cannot carry two letters legibly, so that frame gets the Ю alone;
-    # the browser picks a frame by size, and each is drawn for its own size
-    frames = {16: draw_icon(16, pad_ratio=0.06, text=TEXT[0]),
+    # every frame carries the ЮМ monogram, each drawn at its own size rather
+    # than downscaled from one drawing. The 16px one is set heavier: at that
+    # size the logo weight's thin serifs wash out to pale grey.
+    frames = {16: draw_icon(16, pad_ratio=0.05, weight=700),
               32: draw_icon(32, pad_ratio=0.07),
               48: draw_icon(48, pad_ratio=0.08)}
     # append_images carries each drawing as its own frame; passing `sizes` as
