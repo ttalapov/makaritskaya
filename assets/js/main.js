@@ -22,6 +22,54 @@ function initReveal() {
   els.forEach((el) => observer.observe(el));
 }
 
+// ─── STAT COUNTERS ───────────────────────────────────────────
+// Counts up once, when the block comes into view - these numbers sit on the
+// second screen, so animating them on load would finish before anyone looks.
+// "10+" counts the 10 and keeps the +; "∞" has nothing to count and is left
+// alone, so it just fades in with its card.
+function initCounters() {
+  const nums = [...document.querySelectorAll('.stat-num')]
+    .map((el) => ({ el, m: el.textContent.trim().match(/^(\d+)(.*)$/) }))
+    .filter((x) => x.m);
+  if (!nums.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+
+  const DURATION = 900;
+  const run = ({ el, m }) => {
+    const target = Number(m[1]);
+    const suffix = m[2];
+    const final = el.textContent;
+    // a screen reader passing by mid-count should still hear the real number
+    el.setAttribute('aria-hidden', 'true');
+    const spoken = document.createElement('span');
+    spoken.className = 'visually-hidden';
+    spoken.textContent = final;
+    el.after(spoken);
+
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min((now - start) / DURATION, 1);
+      const eased = 1 - Math.pow(1 - t, 3);          // ease-out, no overshoot
+      el.textContent = Math.round(target * eased) + suffix;
+      if (t < 1) return requestAnimationFrame(step);
+      el.textContent = final;
+      el.removeAttribute('aria-hidden');
+      spoken.remove();
+    };
+    el.textContent = 0 + suffix;
+    requestAnimationFrame(step);
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      observer.unobserve(e.target);
+      run(nums.find((x) => x.el === e.target));
+    });
+  }, { threshold: 0.6 });
+  nums.forEach((x) => observer.observe(x.el));
+}
+
 // ─── BURGER MENU ─────────────────────────────────────────────
 // The open menu covers the whole viewport, so it behaves like a dialog:
 // focus moves into it, everything behind it is inert (unreachable by Tab and
@@ -59,5 +107,6 @@ function initBurger() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
+  initCounters();
   initBurger();
 });
