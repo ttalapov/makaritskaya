@@ -503,6 +503,10 @@ function build() {
   writeFileSync(join(dist, '404.html'), nf, 'utf8');
   console.log(`  /404.html          ${(Buffer.byteLength(nf) / 1024).toFixed(1)} KB`);
 
+  // Browsers and crawlers ask for /favicon.ico blind, before parsing any
+  // markup, so the declared copy under /assets/ needs a twin at the root.
+  copyFileSync(join(dist, 'assets', 'img', 'favicon.ico'), join(dist, 'favicon.ico'));
+
   writeFileSync(join(dist, 'sitemap.xml'), sitemap(), 'utf8');
   writeFileSync(join(dist, 'robots.txt'), robots(), 'utf8');
   writeFileSync(join(dist, 'CNAME'), 'makaritskaya.pp.ua\n', 'utf8');
@@ -511,7 +515,7 @@ function build() {
   console.log(`  ${cssHref}`);
   console.log(`  ${jsHref}`);
   for (const l of LOCALES) console.log(`  ${ogHref[l.segment]}`);
-  console.log(`  sitemap.xml, robots.txt, CNAME, .nojekyll`);
+  console.log(`  favicon.ico, sitemap.xml, robots.txt, CNAME, .nojekyll`);
 
   if (todos.length) {
     console.log(`\n  ${todos.length} string(s) still marked TODO - drafts are published as-is:`);
