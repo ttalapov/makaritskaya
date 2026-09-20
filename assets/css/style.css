@@ -412,12 +412,8 @@ html:not(.js) button.burger, html:not(.js) button.mobile-close { display: none; 
    MOBILE  (≤768px)
 ═══════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  /* Nav */
+  /* Nav - the burger itself is already on from the 940px rule above */
   .site-nav { padding: 1rem 1.25rem; }
-  .nav-links { display: none; }
-  .nav-right { display: none; }
-  .burger { display: flex; }
-  .mobile-menu { display: flex; }
 
   /* Sections */
   section { padding: 4rem 1.25rem; }

@@ -51,7 +51,6 @@ const ICONS = {
   g3: '<path d="M3 8h9M17 8h4M3 16h5M13 16h8"/><circle cx="14.5" cy="8" r="2.2"/><circle cx="10.5" cy="16" r="2.2"/>',
   g4: '<path d="M8.5 4 5 6l-2 4 3 1.6V20h12v-8.4L21 10l-2-4-3.5-2a3.5 3.5 0 0 1-7 0Z"/>',
   g5: '<path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M6 10.2V20h12v-9.8"/><path d="M10 20v-5h4v5"/>',
-  g6: '<path d="M9 17V5.5l10-2V15"/><circle cx="6.5" cy="17.5" r="2.5"/><circle cx="16.5" cy="15.5" r="2.5"/>',
   g7: '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H19v14H6.5A2.5 2.5 0 0 0 4 19.5Z"/><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H19v4H6.5A2.5 2.5 0 0 1 4 19.5Z"/><path d="M9 7.5h6"/>',
   cap:        '<path d="M12 4 2.5 8.5 12 13l9.5-4.5z"/><path d="M6 10.5v4.8c0 .5.3 1 .8 1.2 1.6.8 3.4 1.2 5.2 1.2s3.6-.4 5.2-1.2c.5-.2.8-.7.8-1.2v-4.8"/><path d="M21.5 8.5v5.2"/>',
   evidence:   '<path d="M6.5 3h8L19 7.5V21H6.5z"/><path d="M14.5 3v4.5H19"/><path d="m9.5 13.8 2 2 3.6-4.4"/>',
@@ -70,6 +69,10 @@ const ICONS = {
   clock:      '<circle cx="12" cy="12" r="8.5"/><path d="M12 6.9v5.4l3.3 2"/>',
   close:       '<path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/>',
 };
+/** Icons the templates ask for by name rather than through content. Listed
+ *  here so the unused-icon check below can see them too. */
+const DIRECT_ICONS = { iconClose: 'close', iconPhone: 'phone', iconInstagram: 'instagram', iconPin: 'pin', iconClock: 'clock' };
+
 const ICON = (key) => {
   if (!(key in ICONS)) throw new Error(`unknown icon: ${key}`);
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ` +
@@ -246,6 +249,25 @@ function checkHours(c, segment) {
       }
     }
   }
+}
+
+/** An icon nobody references is dead weight that still reads as intentional.
+ *  Content carries icons under "icon" keys - including entries hidden from
+ *  the page, which stay deliberately. */
+function checkIcons(contents) {
+  const used = new Set(Object.values(DIRECT_ICONS));
+  const collect = (node) => {
+    if (Array.isArray(node)) return node.forEach(collect);
+    if (node && typeof node === 'object') {
+      for (const [k, v] of Object.entries(node)) {
+        if (k === 'icon' && typeof v === 'string') used.add(v);
+        else collect(v);
+      }
+    }
+  };
+  Object.values(contents).forEach(collect);
+  const unused = Object.keys(ICONS).filter((k) => !used.has(k));
+  if (unused.length) console.warn(`  unused icon(s) in ICONS: ${unused.join(', ')}`);
 }
 
 function jsonLd(loc, c, contents, ogImage) {
@@ -427,6 +449,8 @@ function build() {
     contents[loc.segment] = walk(JSON.parse(readFileSync(file, 'utf8')), loc.segment);
   }
 
+  checkIcons(contents);
+
   for (const loc of LOCALES) {
     const c = contents[loc.segment];
     if (!c) continue;
@@ -449,11 +473,7 @@ function build() {
       hreflangLinks: hreflangLinks(loc),
       langSwitcher: langSwitcher(loc),
       langSwitcherMobile: langSwitcher(loc, ' mobile-lang'),
-      iconClose: ICON('close'),
-      iconPhone: ICON('phone'),
-      iconInstagram: ICON('instagram'),
-      iconPin: ICON('pin'),
-      iconClock: ICON('clock'),
+      ...Object.fromEntries(Object.entries(DIRECT_ICONS).map(([k, v]) => [k, ICON(v)])),
       arrowLg: ARROW(16),
       arrowSm: ARROW(14),
       statsHtml: renderStats(c.about.stats),
