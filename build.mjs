@@ -212,6 +212,14 @@ const renderWhoCards = (cards) => cards.filter((c) => !c.hidden).map((c, i) => {
     `<div class="who-title">${esc(c.title)}</div><div class="who-desc">${esc(c.desc)}</div></div>`;
 }).join('\n');
 
+/** contact.hoursVal stays one string in the content file - the author writes
+ *  the days exactly as they read. It is split on the " · " separator only so
+ *  that a narrow screen can break between the parts instead of inside a time
+ *  range. Another separator, or none, simply yields one part. */
+const renderHours = (hoursVal) => hoursVal.split(' · ')
+  .map((part) => `<span class="hours-part">${esc(part)}</span>`)
+  .join('<span class="hours-sep" aria-hidden="true"> · </span>');
+
 const visible = (items) => items.filter((x) => !x.hidden);
 
 // Native <details>: works without JS, keyboard and screen readers get it for
@@ -455,6 +463,7 @@ function build() {
       featuresHtml: renderFeatures(c.approach.features),
       whoCardsHtml: renderWhoCards(c.who.cards),
       faqHtml: renderFaq(c.faq.items),
+      hoursHtml: renderHours(c.contact.hoursVal),
       phoneHref: c.contact.phone.replace(/[^\d+]/g, ''),
     };
 

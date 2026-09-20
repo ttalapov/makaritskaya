@@ -222,6 +222,8 @@ section { padding: 7rem 4rem; }
 .contact-icon svg { width: 20px; height: 20px; }
 .contact-label { font-size: 0.72rem; color: var(--ink-muted); }
 .contact-val { font-size: 1rem; font-weight: 500; color: var(--ink); }
+/* a time range never breaks across lines; the row may break between days */
+.hours-part { white-space: nowrap; }
 .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 /* ─── FOOTER ─── */
@@ -484,6 +486,10 @@ html:not(.js) button.burger, html:not(.js) button.mobile-close { display: none; 
 
   /* Methods */
   .method-card { padding: 1.5rem; }
+
+  /* Contact - one day range per line, the dot separator is then redundant */
+  .hours-part { display: block; }
+  .hours-sep { display: none; }
 
   /* Section headings */
   .section-heading { font-size: 1.8rem; }
