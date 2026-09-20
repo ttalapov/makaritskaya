@@ -32,9 +32,11 @@
   --nav-h: 79px;
 }
 /* The header is fixed, so an anchor jump has to stop below it - otherwise the
-   section label and the top of the heading land underneath. Keep --nav-h in
-   step with .site-nav's padding at each breakpoint. */
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 0.5rem); }
+   section label and the top of the heading land underneath. The section then
+   sits flush against the header: any slack here shows as a strip of the
+   previous section, and the 1px tucks the edge under it at fractional zoom.
+   Keep --nav-h in step with .site-nav's padding at each breakpoint. */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) - 1px); }
 :focus-visible { outline: 2px solid var(--sage-text); outline-offset: 3px; border-radius: 4px; }
 main:focus { outline: none; }
 .skip-link { position: fixed; top: 0.75rem; left: 0.75rem; z-index: 300; padding: 0.7rem 1.2rem; border-radius: 2rem; background: var(--ink); color: var(--white); font-size: 0.88rem; font-weight: 500; text-decoration: none; transform: translateY(-200%); }
