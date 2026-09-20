@@ -29,8 +29,12 @@
   --cream-warm: #f5f0e8;
   --white: #ffffff;
   --border: rgba(122,158,138,0.2);
+  --nav-h: 79px;
 }
-html { scroll-behavior: smooth; }
+/* The header is fixed, so an anchor jump has to stop below it - otherwise the
+   section label and the top of the heading land underneath. Keep --nav-h in
+   step with .site-nav's padding at each breakpoint. */
+html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 0.5rem); }
 :focus-visible { outline: 2px solid var(--sage-text); outline-offset: 3px; border-radius: 4px; }
 main:focus { outline: none; }
 .skip-link { position: fixed; top: 0.75rem; left: 0.75rem; z-index: 300; padding: 0.7rem 1.2rem; border-radius: 2rem; background: var(--ink); color: var(--white); font-size: 0.88rem; font-weight: 500; text-decoration: none; transform: translateY(-200%); }
@@ -348,6 +352,7 @@ html:not(.js) button.burger, html:not(.js) button.mobile-close { display: none; 
    TABLET  (≤1024px)
 ═══════════════════════════════════════════════ */
 @media (max-width: 1024px) {
+  :root { --nav-h: 69px; }
   .site-nav { padding: 1rem 2rem; }
   .nav-links { gap: 1.25rem; }
   section { padding: 5rem 2.5rem; }
