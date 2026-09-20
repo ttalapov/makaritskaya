@@ -26,7 +26,6 @@
   --ink: #1e2420;
   --ink-muted: #4a5652;
   --cream: #faf8f4;
-  --cream-warm: #f5f0e8;
   --white: #ffffff;
   --border: rgba(122,158,138,0.2);
   --nav-h: 79px;
@@ -147,7 +146,7 @@ section { padding: 7rem 4rem; }
 .cred-text strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 0.15rem; }
 
 /* ─── METHODS ─── */
-.methods { background: var(--cream-warm); }
+.methods { background: var(--cream); }
 .methods-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
 .methods-header .section-sub { margin: 0 auto; }
 .methods-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; max-width: 1100px; margin: 0 auto; align-items: start; }
