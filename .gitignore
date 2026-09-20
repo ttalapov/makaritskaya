@@ -19,8 +19,9 @@ _*.html
 # outside it by construction rather than by a filter someone can forget.
 sources/
 
-# fonts fetched by tools/og-card.py on first run
+# fonts fetched by tools/og-card.py, and unpacked by tools/favicons.py
 tools/.fonts/
+__pycache__/
 
 # local working notes, deliberately not shared
 HANDOFF.md
