@@ -266,7 +266,10 @@ footer .footer-name { font-family: var(--font-serif); font-size: 1rem; color: rg
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
+  /* 2px bar + 6px gap = an 8px pitch, which lands on whole device pixels at
+     every common screen density; at 7px the three bars rasterised to
+     different thicknesses on a 2.75x phone. */
+  gap: 6px;
   width: 36px;
   height: 36px;
   background: none;
@@ -285,9 +288,9 @@ footer .footer-name { font-family: var(--font-serif); font-size: 1rem; color: rg
   transition: transform 0.28s ease, opacity 0.28s ease;
   transform-origin: center;
 }
-.burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
 .burger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
-.burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.burger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
 /* ─── MOBILE MENU ─── */
 .mobile-menu {
