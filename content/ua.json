@@ -331,7 +331,9 @@
     "phone": "+380 66 044 3777",
     "instagramHandle": "@sensory_matilda",
     "instagramUrl": "https://www.instagram.com/sensory_matilda/",
-    "cityLabel": "Місто",
+    "addressLabel": "Адреса",
+    "addressVal": "пр-т Людвіга Свободи, 30б",
+    "addressNote": "Харків, метро Олексіївська",
     "cityVal": "Харків, Україна",
     "hoursLabel": "Прийом",
     "hoursVal": "Пн–Пт: 9:00–19:00 · Сб: 10:00–15:00"

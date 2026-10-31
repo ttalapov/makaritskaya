@@ -32,8 +32,8 @@ const DEFAULT_LOCALE = LOCALES[0];   // also the x-default target
 // no place in the visible copy. Only what the client has confirmed.
 //   languages - the FAQ answer: Ukrainian or Russian, English or Polish on request
 //   hours     - must agree with contact.hoursVal; the build checks it
-// Deliberately absent: street address (not published), alumniOf (university
-// and year stay off the site until the diploma is), priceRange (not agreed).
+// Deliberately absent: alumniOf (university and year stay off the site until
+// the diploma is), priceRange (not agreed), postalCode and geo (not supplied).
 const PRACTICE = {
   languages: ['uk', 'ru', 'en', 'pl'],
   hours: [
@@ -284,7 +284,7 @@ function jsonLd(loc, c, contents, ogImage) {
       name: fullName(c),
       alternateName: Object.entries(contents).filter(([s]) => s !== loc.segment).map(([, x]) => fullName(x)),
       jobTitle: c.hero.title,
-      image: `${SITE}/assets/img/hero-yuliia-334.png`,
+      image: `${SITE}/assets/img/hero-yuliia-522.png`,
       url,
       telephone: phone,
       sameAs: [c.contact.instagramUrl],
@@ -309,7 +309,7 @@ function jsonLd(loc, c, contents, ogImage) {
       image: ogImage,
       telephone: phone,
       sameAs: [c.contact.instagramUrl],
-      address: { '@type': 'PostalAddress', addressLocality: city, addressCountry: 'UA' },
+      address: { '@type': 'PostalAddress', streetAddress: c.contact.addressVal, addressLocality: city, addressCountry: 'UA' },
       areaServed: { '@type': 'City', name: city },
       availableLanguage: PRACTICE.languages,
       openingHoursSpecification: PRACTICE.hours.map((h) => ({

@@ -331,7 +331,9 @@
     "phone": "+380 66 044 3777",
     "instagramHandle": "@sensory_matilda",
     "instagramUrl": "https://www.instagram.com/sensory_matilda/",
-    "cityLabel": "Город",
+    "addressLabel": "Адрес",
+    "addressVal": "пр-т Людвига Свободы, 30б",
+    "addressNote": "Харьков, метро Алексеевская",
     "cityVal": "Харьков, Украина",
     "hoursLabel": "Приём",
     "hoursVal": "Пн–Пт: 9:00–19:00 · Сб: 10:00–15:00"
